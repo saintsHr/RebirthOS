@@ -6,6 +6,9 @@
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 
+#define VGA_CMD_PORT  0x3D4
+#define VGA_DATA_PORT 0x3D5
+
 #define VGA_BLACK 0x0
 #define VGA_BLUE 0x1
 #define VGA_GREEN 0x2
@@ -26,4 +29,6 @@
 extern uint16_t* const VGA_BUFFER;
 
 void vga_putEntry(uint8_t bg, uint8_t fg, char ch, uint8_t x, uint8_t y);
-void vga_print(uint8_t bg, uint8_t fg, char* str, uint8_t x, uint8_t y);
+void vga_print(uint8_t bg, uint8_t fg, char* str);
+void vga_moveCursor(uint8_t x, uint8_t y);
+void vga_getCursor(uint8_t* x, uint8_t* y);

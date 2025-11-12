@@ -15,6 +15,12 @@ NAME = os
 all: bin/$(NAME).bin
 iso: bin/os.iso
 
+test: 
+	$(MAKE) all
+	$(MAKE) iso
+	$(MAKE) run
+	clear
+
 clear:
 	rm -rf bin
 	rm -rf build
