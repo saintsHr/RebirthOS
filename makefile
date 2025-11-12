@@ -10,7 +10,7 @@ ASFLAGS =
 CFLAGS = -Iinclude -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LDFLAGS = -ffreestanding -O2 -nostdlib -lgcc
 
-NAME = os
+NAME = RebirthOS
 
 all: bin/$(NAME).bin
 iso: bin/os.iso
@@ -43,6 +43,6 @@ build/%.o: src/%.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-bin/os.bin: $(OBJ)
+bin/$(NAME).bin: $(OBJ)
 	mkdir -p bin
 	$(CC) -T linker.ld -o $@ $(LDFLAGS) $^
