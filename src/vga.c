@@ -53,6 +53,6 @@ void vga_print(uint8_t bg, uint8_t fg, char* str){
         }
 
         vga_putEntry(bg, fg, str[i], x - 1, y);
-        vga_moveCursor(x + 1, y);
+        vga_moveCursor(x, y);
     }
 }
