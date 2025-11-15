@@ -1,6 +1,7 @@
 #include "util.h"
 #include "io.h"
 #include <stdint.h>
+#include <stdarg.h>
 
 uint8_t util_getNumberPlace(unsigned long long n, uint8_t place){
     if (place < 1) return 0;
@@ -45,6 +46,18 @@ char* util_intToStr(unsigned long long n){
     return str;
 }
 
+char* util_binaryToStr(uint64_t num, uint8_t bits){
+    static char str[65];
+    if(bits > 64) bits = 64;
+
+    for(int i = bits-1; i >= 0; i--){
+        str[bits-1 - i] = (num & (1ULL << i)) ? '1' : '0';
+    }
+    
+    str[bits] = '\0';
+    return str;
+}
+
 uint16_t util_pitReadCounter(){
     outb(0x43, 0x00);
     uint8_t lo = inb(0x40);
@@ -78,4 +91,31 @@ void util_wait(uint32_t ms){
 
         prev = now;
     }
+}
+
+uint64_t util_decimalToBinary(uint64_t num, uint8_t bits){
+    uint64_t result = 0;
+
+    if(bits > 64) bits = 64;
+
+    for(uint8_t i = 0; i < bits; i++){
+        uint64_t bit = (num >> i) & 1ULL;
+        result |= (bit << i);
+    }
+
+    return result;
+}
+
+uint64_t binary_to_decimal(uint64_t bin, uint8_t bits){
+    uint64_t result = 0;
+
+    if(bits > 64) bits = 64;
+
+    for(uint8_t i = 0; i < bits; i++){
+        if(bin & (1ULL << i)){
+            result += (1ULL << i);
+        }
+    }
+
+    return result;
 }

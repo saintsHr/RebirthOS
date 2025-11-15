@@ -1,6 +1,8 @@
 #include "vga.h"
 #include "multiboot.h"
 #include "util.h"
+#include "init.h"
+#include "str.h"
 
 void kernel_panic(char* msg){
     vga_clear(VGA_BLACK, VGA_BLACK);
@@ -26,4 +28,13 @@ void kmain(unsigned long magic, unsigned long addr){
     if (!(mb->flags & 0x1)) {
         kernel_panic("Memory info not available");
     }
+
+    // gets avaible memory
+    uint32_t mem_kb = mb->mem_lower + mb->mem_upper;
+    uint16_t mem_mb = mem_kb / 1024;
+
+    // init logs
+    init_printLog("Kernel Initializing...", "ok");
+    init_printLog(str_concatStr(2, "Flags: ", util_binaryToStr(mb->flags, 32)), "info");
+    init_printLog(str_concatStr(3, "Total Memory: ", util_intToStr(mem_mb), " MB"), "info");
 }

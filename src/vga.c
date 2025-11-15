@@ -40,6 +40,16 @@ void vga_clear(uint8_t bg, uint8_t fg){
     }
 }
 
+void vga_newLine(){
+    uint8_t x, y;
+    vga_getCursor(&x, &y);
+    if (y < VGA_HEIGHT){
+        vga_moveCursor(0, y + 1);
+    }else{
+        return;
+    }
+}
+
 void vga_print(uint8_t bg, uint8_t fg, char* str){
     uint8_t x, y;
     vga_getCursor(&x, &y);
