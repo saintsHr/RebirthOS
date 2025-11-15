@@ -3,3 +3,6 @@
 
 uint8_t util_getNumberPlace(unsigned long long n, uint8_t place);
 char* util_intToStr(unsigned long long n);
+uint16_t util_pitReadCounter();
+void util_pitInitPolling();
+void util_wait(uint32_t ms);

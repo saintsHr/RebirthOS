@@ -31,28 +31,34 @@ void vga_getCursor(uint8_t* x, uint8_t* y){
     *x = pos % VGA_WIDTH;
 }
 
-void vga_print(uint8_t bg, uint8_t fg, char* str){
-    uint8_t x;
-    uint8_t y;
+void vga_clearScreen(){
+    uint16_t* vram = (uint16_t*)0xB8000;
+    uint16_t empty = (VGA_BLACK << 12) | (VGA_BLACK << 8) | ' ';
 
+    for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT; i++) {
+        vram[i] = empty;
+    }
+}
+
+void vga_print(uint8_t bg, uint8_t fg, char* str){
+    uint8_t x, y;
     vga_getCursor(&x, &y);
 
-    for (uint16_t i = 0; i < 60000; i++){
-        if (str[i] == '\0') break;
+    for (uint16_t i = 0; str[i] != '\0'; i++){
         if (str[i] == '\n'){
-            y++;
-            i++;
-            x = 0;
-        }
-
-        if (x >= VGA_WIDTH - 1){
             x = 0;
             y++;
-        }else{
-            x++;
+            vga_moveCursor(x, y);
         }
 
-        vga_putEntry(bg, fg, str[i], x - 1, y);
+        if (x >= VGA_WIDTH){
+            x = 0;
+            y++;
+            vga_moveCursor(x, y);
+        }
+
+        vga_putEntry(bg, fg, str[i], x, y);
+        x++;
         vga_moveCursor(x, y);
     }
 }
