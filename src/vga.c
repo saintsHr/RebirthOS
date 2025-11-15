@@ -31,9 +31,9 @@ void vga_getCursor(uint8_t* x, uint8_t* y){
     *x = pos % VGA_WIDTH;
 }
 
-void vga_clear(){
+void vga_clear(uint8_t bg, uint8_t fg){
     uint16_t* vram = (uint16_t*)0xB8000;
-    uint16_t empty = (VGA_BLACK << 12) | (VGA_LGRAY << 8) | ' ';
+    uint16_t empty = (bg << 12) | (fg << 8) | ' ';
 
     for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT; i++) {
         vram[i] = empty;
@@ -48,6 +48,7 @@ void vga_print(uint8_t bg, uint8_t fg, char* str){
         if (str[i] == '\n'){
             x = 0;
             y++;
+            i++;
             vga_moveCursor(x, y);
         }
 

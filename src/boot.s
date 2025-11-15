@@ -24,7 +24,12 @@ stack_top:
 _start:
 	mov $stack_top, %esp
 
+	push %ebx
+    push %eax
+
 	call kmain
+
+	add $8, %esp 
 
 	cli
 1:	hlt
