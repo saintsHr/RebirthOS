@@ -33,7 +33,7 @@ bin/os.iso: bin/$(NAME).bin
 	grub-mkrescue -o bin/$(NAME).iso isodir
 
 run:
-	qemu-system-i386 -cdrom bin/$(NAME).iso -serial stdio
+	qemu-system-i386 -cdrom bin/$(NAME).iso -serial stdio -m 4096
 
 build/%.o: src/%.s
 	mkdir -p $(dir $@)
