@@ -32,4 +32,4 @@ void vga_putEntry(uint8_t bg, uint8_t fg, char ch, uint8_t x, uint8_t y);
 void vga_print(uint8_t bg, uint8_t fg, char* str);
 void vga_moveCursor(uint8_t x, uint8_t y);
 void vga_getCursor(uint8_t* x, uint8_t* y);
-void vga_clearScreen();
+void vga_clear();
