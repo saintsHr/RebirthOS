@@ -37,4 +37,10 @@ void kmain(unsigned long magic, unsigned long addr){
     init_printLog("Kernel Initializing...", "ok");
     init_printLog(str_concatStr(2, "Flags: ", util_binaryToStr(mb->flags, 32)), "info");
     init_printLog(str_concatStr(3, "Total Memory: ", util_intToStr(mem_mb), " MB"), "info");
+    init_printLog("Kernel Initialized!", "ok");
+    util_wait(1000); // waits for reading
+    vga_clear(VGA_BLACK, VGA_LGRAY);
+    vga_moveCursor(0, 0);
+
+    init_welcome();
 }
